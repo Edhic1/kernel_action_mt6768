@@ -222,7 +222,7 @@ jobs:
         cd $GITHUB_WORKSPACE/kernel_workspace
         git clone -b kernel-4.14 https://gitlab.com/simonpunk/susfs4ksu.git susfs
     - name: Copy susfs.h
-      run: sudo cp $GITHUB_WORKSPACE/kernel_workspace/susfs/kernel_patches/include/linux/susfs.h include/linux/susfs.h
+      run: sudo cp $GITHUB_WORKSPACE/kernel_workspace/susfs/kernel_patches/include/linux/susfs.h $GITHUB_WORKSPACE/kernel_workspace/include/linux/susfs.h
 
 
 
