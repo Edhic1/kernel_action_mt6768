@@ -242,11 +242,11 @@ jobs:
 
         cp $GITHUB_WORKSPACE/kernel_workspace/android-kernel/susfs4ksu/kernel_patches/fs/* $GITHUB_WORKSPACE/kernel_workspace/android-kernel/fs/
 
-        cd $GITHUB_WORKSPACE/kernel_workspace/KernelSU
+        cd $GITHUB_WORKSPACE/kernel_workspace/android-kernel/KernelSU
 
         patch -p1 < 10_enable_susfs_for_ksu.patch || echo "Patch 10 enable failed, skipping."
 
-        cd $GITHUB_WORKSPACE/kernel_workspace/
+        cd $GITHUB_WORKSPACE/kernel_workspace/android-kernel/
 
         patch -p1 < 50_add_susfs_in_kernel-4.14.patch || echo "Patch 50 add susfs failed, skipping."
 
