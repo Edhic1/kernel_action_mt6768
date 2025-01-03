@@ -232,8 +232,7 @@ jobs:
 
         echo "[+] Patch manual..."
         
-        sed -i '/#include <linux\/fs.h>/a \#ifdef CONFIG_KSU_SUSFS\n\
-int susfs_function(void) { return 0; }\n\#endif' $GITHUB_WORKSPACE/kernel_workspace/android-kernel/fs/devpts/inode.c
+        sed -i '/#include <linux\/fs.h>/a \#ifdef CONFIG_KSU_SUSFS\nint susfs_function(void) { return 0; }\n\#endif' $GITHUB_WORKSPACE/kernel_workspace/android-kernel/fs/devpts/inode.c
 
         sed -i '/down_read(&uts_sem);/a \#ifdef CONFIG_KSU_SUSFS_SPOOF_UNAME\n\
 susfs_spoof_uname(&tmp);\n\#endif' $GITHUB_WORKSPACE/kernel_workspace/android-kernel/kernel/sys.c
