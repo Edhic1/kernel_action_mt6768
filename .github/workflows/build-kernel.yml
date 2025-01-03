@@ -230,6 +230,18 @@ jobs:
 
         patch -p1 < 50_add_susfs_in_kernel-4.14.patch || echo "Patch failed, skipping."
 
+        echo "[+] Patch manual..."
+        
+        sed -i '/#include <linux\/fs.h>/a \
+#ifdef CONFIG_KSU_SUSFS\n\
+int susfs_function(void) { return 0; }\n\
+#endif' $GITHUB_WORKSPACE/kernel_workspace/android-kernel/fs/devpts/inode.c
+
+        sed -i '/down_read(&uts_sem);/a \
+#ifdef CONFIG_KSU_SUSFS_SPOOF_UNAME\n\
+susfs_spoof_uname(&tmp);\n\
+#endif' $GITHUB_WORKSPACE/kernel_workspace/android-kernel/kernel/sys.c
+
         sed -i '/struct ratelimit_state ratelimit;/a\#if defined(CONFIG_KSU_SUSFS) && !defined(ANDROID_KABI_RESERVE)\nu64 android_kabi_reserved2;\n#endif\nANDROID_KABI_RESERVE(1);\nANDROID_KABI_RESERVE(2);' $GITHUB_WORKSPACE/kernel_workspace/android-kernel/include/linux/sched/user.h
 
         ls $GITHUB_WORKSPACE/kernel_workspace/android-kernel/include/linux/susfs.h
