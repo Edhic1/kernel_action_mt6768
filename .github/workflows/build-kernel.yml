@@ -229,8 +229,8 @@ jobs:
         KSU_VERSION=$(cd KernelSU-Next && expr $(/usr/bin/git rev-list --count HEAD) + 10200)
 
         git clone https://gitlab.com/simonpunk/susfs4ksu.git -b kernel-4.14
-        cp ./susfs4ksu/kernel_patches/include/linux/susfs.h $GITHUB_WORKSPACE/kernel_workspace/android-kernel/include/linux/
-        cp ./susfs4ksu/kernel_patches/fs/susfs.c $GITHUB_WORKSPACE/kernel_workspace/android-kernel/fs/
+        cp ./susfs4ksu/kernel_patches/include/linux/* $GITHUB_WORKSPACE/kernel_workspace/android-kernel/include/linux/
+        cp ./susfs4ksu/kernel_patches/fs/* $GITHUB_WORKSPACE/kernel_workspace/android-kernel/fs/
         cp ./susfs4ksu/kernel_patches/50_add_susfs_in_kernel-4.14.patch $GITHUB_WORKSPACE/kernel_workspace/android-kernel
 
 
@@ -238,11 +238,11 @@ jobs:
 
         echo "[+] Patch manual..."
         
-        sed -i '/#include <linux\/fs.h>/a \#ifdef CONFIG_KSU_SUSFS\nint susfs_function(void) { return 0; }\n\#endif' $GITHUB_WORKSPACE/kernel_workspace/android-kernel/fs/devpts/inode.c
+#        sed -i '/#include <linux\/fs.h>/a \#ifdef CONFIG_KSU_SUSFS\nint susfs_function(void) { return 0; }\n\#endif' $GITHUB_WORKSPACE/kernel_workspace/android-kernel/fs/devpts/inode.c
 
-        sed -i '/down_read(&uts_sem);/a \#ifdef CONFIG_KSU_SUSFS_SPOOF_UNAME\nsusfs_spoof_uname(&tmp);\n\#endif' $GITHUB_WORKSPACE/kernel_workspace/android-kernel/kernel/sys.c
+#        sed -i '/down_read(&uts_sem);/a \#ifdef CONFIG_KSU_SUSFS_SPOOF_UNAME\nsusfs_spoof_uname(&tmp);\n\#endif' $GITHUB_WORKSPACE/kernel_workspace/android-kernel/kernel/sys.c
 
-        sed -i '/struct ratelimit_state ratelimit;/a\#if defined(CONFIG_KSU_SUSFS) && !defined(ANDROID_KABI_RESERVE)\nu64 android_kabi_reserved2;\n#endif\nANDROID_KABI_RESERVE(1);\nANDROID_KABI_RESERVE(2);' $GITHUB_WORKSPACE/kernel_workspace/android-kernel/include/linux/sched/user.h
+#        sed -i '/struct ratelimit_state ratelimit;/a\#if defined(CONFIG_KSU_SUSFS) && !defined(ANDROID_KABI_RESERVE)\nu64 android_kabi_reserved2;\n#endif\nANDROID_KABI_RESERVE(1);\nANDROID_KABI_RESERVE(2);' $GITHUB_WORKSPACE/kernel_workspace/android-kernel/include/linux/sched/user.h
 
         echo "[+]Patch manual completed."
         echo "KSUVER=$KSU_VERSION" >> $GITHUB_ENV
