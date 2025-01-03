@@ -228,16 +228,25 @@ jobs:
         curl -LSs "https://raw.githubusercontent.com/rifsxd/KernelSU-Next/next/kernel/setup.sh" | bash -s next-susfs-4.14
         KSU_VERSION=$(cd KernelSU-Next && expr $(/usr/bin/git rev-list --count HEAD) + 10200)
 
+        echo "KSUVER=$KSU_VERSION" >> $GITHUB_ENV
+
         git clone https://gitlab.com/simonpunk/susfs4ksu.git -b kernel-4.14
+
+        cp ./susfs4ksu/kernel_patches/KernelSU/* $GITHUB_WORKSPACE/kernel_workspace/android-kernel/KernelSU/
+        cp ./susfs4ksu/kernel_patches/50_add_susfs_in_kernel-4.14.patch $GITHUB_WORKSPACE/kernel_workspace/android-kernel/
         cp ./susfs4ksu/kernel_patches/include/linux/* $GITHUB_WORKSPACE/kernel_workspace/android-kernel/include/linux/
         cp ./susfs4ksu/kernel_patches/fs/* $GITHUB_WORKSPACE/kernel_workspace/android-kernel/fs/
-        cp ./susfs4ksu/kernel_patches/50_add_susfs_in_kernel-4.14.patch $GITHUB_WORKSPACE/kernel_workspace/android-kernel
 
+        cd $GITHUB_WORKSPACE/kernel_workspace/KernelSU
 
-        patch -p1 < 50_add_susfs_in_kernel-4.14.patch || echo "Patch failed, skipping."
+        patch -p1 < 10_enable_susfs_for_ksu.patch || echo "Patch 10 enable failed, skipping."
+
+        cd $GITHUB_WORKSPACE/kernel_workspace/
+
+        patch -p1 < 50_add_susfs_in_kernel-4.14.patch || echo "Patch 50 add susfs failed, skipping."
 
        
-        echo "KSUVER=$KSU_VERSION" >> $GITHUB_ENV
+        
 
 
 
