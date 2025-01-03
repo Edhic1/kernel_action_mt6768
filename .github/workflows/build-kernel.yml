@@ -230,7 +230,7 @@ jobs:
 
         echo "KSUVER=$KSU_VERSION" >> $GITHUB_ENV
 
-        sed -i '/ struct ratelimit_state ratelimit;/ a\#if defined (CONFIG_KSU_SUSFS) && ! defined (ANDROID_KABI_RESERVE) \nu64 android_kabi_reserved2;\n#endif\nANDR OID_KABI_RESERVE (1);\nANDROID_KABI_RESERVE (2);' $GITHUB_WORKSPACE/kernel_workspace/ android-kernel/include/linux/sched/user.h
+        sudo sed -i '/ struct ratelimit_state ratelimit;/ a\#if defined (CONFIG_KSU_SUSFS) && ! defined (ANDROID_KABI_RESERVE) \nu64 android_kabi_reserved2;\n#endif\nANDR OID_KABI_RESERVE (1);\nANDROID_KABI_RESERVE (2);' $GITHUB_WORKSPACE/kernel_workspace/ android-kernel/include/linux/sched/user.h
 
         git clone https://gitlab.com/simonpunk/susfs4ksu.git -b kernel-4.14
 
