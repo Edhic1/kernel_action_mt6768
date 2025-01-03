@@ -244,12 +244,7 @@ jobs:
 
         sed -i '/struct ratelimit_state ratelimit;/a\#if defined(CONFIG_KSU_SUSFS) && !defined(ANDROID_KABI_RESERVE)\nu64 android_kabi_reserved2;\n#endif\nANDROID_KABI_RESERVE(1);\nANDROID_KABI_RESERVE(2);' $GITHUB_WORKSPACE/kernel_workspace/android-kernel/include/linux/sched/user.h
 
-        ls $GITHUB_WORKSPACE/kernel_workspace/android-kernel/include/linux/susfs.h
-        ls $GITHUB_WORKSPACE/kernel_workspace/android-kernel/fs/susfs.c
-
-
-        grep -r "susfs_is_sus_su_hooks_enabled" .
-
+        echo "[+]Patch manual completed."
         echo "KSUVER=$KSU_VERSION" >> $GITHUB_ENV
 
 
