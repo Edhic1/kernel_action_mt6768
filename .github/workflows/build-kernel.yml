@@ -235,7 +235,8 @@ jobs:
 
 
 
-        sed -i '/^#define KSU_SUSFS_H/a #define USER_STRUCT_KABI2_NON_ROOT_USER_APP_PROFILE 16777216 // 1 << 24, for distinguishing root/no-root granted user app process' $GITHUB_WORKSPACE/kernel_workspace/android-kernel/susfs4ksu/kernel_patches/include/linux/susfs.h
+        sed -i '/^#define CMD_SUSFS_SUS_SU 0x60000/a #define USER_STRUCT_KABI2_NON_ROOT_USER_APP_PROFILE 16777216 // 1 << 24, for distinguishing root/no-root granted user app process' 
+ $GITHUB_WORKSPACE/kernel_workspace/android-kernel/susfs4ksu/kernel_patches/include/linux/susfs_def.h
 
 
         mkdir $GITHUB_WORKSPACE/kernel_workspace/android-kernel/KernelSU/
