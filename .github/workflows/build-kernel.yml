@@ -33,7 +33,6 @@ jobs:
             KERNELSU_TAG
             KSU_EXPECTED_SIZE
             KSU_EXPECTED_HASH
-            KSU_NEXT_REVERT
             KSU_REVERT
             ADD_KPROBES_CONFIG
             KSU_HOOKS_PATCH
@@ -41,9 +40,6 @@ jobs:
             ADD_APATCH_SUPPORT
             FIX_APATCH_OPENELA
             OLD_ANDROID_SUPPORT
-            CONFIG_KSU
-            CONFIG_KSU_SUSFS
-            CONFIG_KSU_SUSFS_SUS_SU
             USE_CUSTOM_CLANG
             CUSTOM_CLANG_SOURCE
             CUSTOM_CLANG_BRANCH
@@ -253,6 +249,29 @@ jobs:
               u64 android_kabi_reserved8;\
           };/' $GITHUB_WORKSPACE/kernel_workspace/android-kernel/include/linux/sched/user.h
 
+
+        cat <<EOF >> arch/arm64/configs/defconfig
+# KernelSU configurations
+CONFIG_KSU=y
+CONFIG_KSU_DEBUG=y
+CONFIG_KSU_SUSFS=y
+# SUSFS configurations
+CONFIG_KSU_SUSFS_SUS_PATH=y
+CONFIG_KSU_SUSFS_HAS_MAGIC_MOUNT=y
+CONFIG_KSU_SUSFS_SUS_MOUNT=y
+CONFIG_KSU_SUSFS_AUTO_ADD_SUS_KSU_DEFAULT_MOUNT=y
+CONFIG_KSU_SUSFS_AUTO_ADD_SUS_BIND_MOUNT=y
+CONFIG_KSU_SUSFS_SUS_KSTAT=y
+CONFIG_KSU_SUSFS_SUS_OVERLAYFS=y
+CONFIG_KSU_SUSFS_TRY_UMOUNT=y
+CONFIG_KSU_SUSFS_AUTO_ADD_TRY_UMOUNT_FOR_BIND_MOUNT=y
+CONFIG_KSU_SUSFS_SPOOF_UNAME=y
+CONFIG_KSU_SUSFS_ENABLE_LOG=y
+CONFIG_KSU_SUSFS_HIDE_KSU_SUSFS_SYMBOLS=y
+CONFIG_KSU_SUSFS_SPOOF_PROC_CMDLINE=y
+CONFIG_KSU_SUSFS_OPEN_REDIRECT=y
+CONFIG_KSU_SUSFS_SUS_SU=y
+EOF
 
         cat $GITHUB_WORKSPACE/kernel_workspace/android-kernel/include/linux/sched/user.h
 
