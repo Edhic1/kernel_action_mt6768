@@ -237,19 +237,21 @@ jobs:
 
         sed -i '/^#define CMD_SUSFS_SUS_SU 0x60000/a #define USER_STRUCT_KABI2_NON_ROOT_USER_APP_PROFILE 16777216 // 1 << 24, for distinguishing root/no-root granted user app process' $GITHUB_WORKSPACE/kernel_workspace/android-kernel/susfs4ksu/kernel_patches/include/linux/susfs_def.h
 
+
+
         sed -i '/^struct user_struct {/,/^};/ s/^};/\
-    #ifdef CONFIG_KSU_SUSFS\
-        u64 android_kabi_reserved2;\
-    #endif\
-        // Android KABI reserved fields\
-        u64 android_kabi_reserved1;\
-        u64 android_kabi_reserved3;\
-        u64 android_kabi_reserved4;\
-        u64 android_kabi_reserved5;\
-        u64 android_kabi_reserved6;\
-        u64 android_kabi_reserved7;\
-        u64 android_kabi_reserved8;\
-};/' $GITHUB_WORKSPACE/kernel_workspace/android-kernel/include/linux/sched/user.h
+          #ifdef CONFIG_KSU_SUSFS\
+              u64 android_kabi_reserved2;\
+          #endif\
+              \/\/ Android KABI reserved fields\
+              u64 android_kabi_reserved1;\
+              u64 android_kabi_reserved3;\
+              u64 android_kabi_reserved4;\
+              u64 android_kabi_reserved5;\
+              u64 android_kabi_reserved6;\
+              u64 android_kabi_reserved7;\
+              u64 android_kabi_reserved8;\
+          };/' $GITHUB_WORKSPACE/kernel_workspace/android-kernel/include/linux/sched/user.h
 
 
         mkdir $GITHUB_WORKSPACE/kernel_workspace/android-kernel/KernelSU/
