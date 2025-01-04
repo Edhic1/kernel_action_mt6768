@@ -254,6 +254,8 @@ jobs:
           };/' $GITHUB_WORKSPACE/kernel_workspace/android-kernel/include/linux/sched/user.h
 
 
+        cat $GITHUB_WORKSPACE/kernel_workspace/android-kernel/include/linux/sched/user.h
+
         mkdir $GITHUB_WORKSPACE/kernel_workspace/android-kernel/KernelSU/
  
         cp $GITHUB_WORKSPACE/kernel_workspace/android-kernel/susfs4ksu/kernel_patches/KernelSU/* $GITHUB_WORKSPACE/kernel_workspace/android-kernel/KernelSU/
