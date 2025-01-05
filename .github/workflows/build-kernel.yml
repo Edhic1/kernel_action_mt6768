@@ -317,6 +317,7 @@ jobs:
 
         echo "Starting to process AnyKernel3 source: ${{ env.CUSTOM_ANYKERNEL3_SOURCE }}"
 
+        # Determine the type of source
         if [[ ${{ env.CUSTOM_ANYKERNEL3_SOURCE }} == *'.tar.gz' ]]; then
             echo "Detected .tar.gz source."
             wget -nv --tries=3 --timeout=30 -O AnyKernel3.tar.gz ${{ env.CUSTOM_ANYKERNEL3_SOURCE }}
@@ -353,9 +354,11 @@ jobs:
                 exit 1
             fi
 
+            # Validate the downloaded file
             unzip -t AnyKernel3.zip > /dev/null 2>&1
             if [ $? -ne 0 ]; then
                 echo "Error: The downloaded AnyKernel3.zip file is invalid or corrupted!"
+                rm -f AnyKernel3.zip
                 exit 1
             fi
 
