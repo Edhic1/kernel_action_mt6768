@@ -177,13 +177,11 @@ jobs:
 
 
     - name: Modify apk_sign.c
-        run: |
-          sed -i '/#include "kernel_compat.h"/a \
-          #define EXPECTED_SIZE 0x03e6\
-          #define EXPECTED_HASH "79e590113c4c4c0c222978e413a5faa801666957b1212a328e46c00c69821bf7"' \
-          $GITHUB_WORKSPACE/kernel_workspace/android-kernel/KernelSU-Next/kernel/apk_sign.c
-
-
+  run: |
+    sed -i '/#include "kernel_compat.h"/a \
+    #define EXPECTED_SIZE 0x03e6\
+    #define EXPECTED_HASH "79e590113c4c4c0c222978e413a5faa801666957b1212a328e46c00c69821bf7"' \
+    $GITHUB_WORKSPACE/kernel_workspace/android-kernel/KernelSU-Next/kernel/apk_sign.c
 
     - name: Setup Configuration for Kernel
       run: |
