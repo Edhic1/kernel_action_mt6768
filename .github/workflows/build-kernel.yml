@@ -226,7 +226,7 @@ jobs:
 
         KSU_VERSION=$(cd KernelSU-Next && expr $(/usr/bin/git rev-list --count HEAD) + 10200)
 
-        mv KernelSU_Next KernelSU
+        mv KernelSU-Next KernelSU
 
         git clone https://gitlab.com/simonpunk/susfs4ksu.git -b kernel-4.14
 
