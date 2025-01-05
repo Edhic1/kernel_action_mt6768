@@ -221,11 +221,20 @@ jobs:
     - name: Setup KernelSU
       if: env.ENABLE_KERNELSU == 'true'
       run: |
-        cd $GITHUB_WORKSPACE/kernel_workspace/android-kernel
+        cd $GITHUB_WORKSPACE/kernel_workspace/android-kernel 
+
+        echo "list"
+
+        ls
         
         KSU_VERSION=$(cd KernelSU-Next && expr $(/usr/bin/git rev-list --count HEAD) + 10200)
+        
+       cat <<EOF > $GITHUB_WORKSPACE/kernel_workspace/android-kernel/arch/arm64/configs/lancelot_defconfig
+EXPECTED_SIZE=0x03e6
+EXPECTED_HASH=79e590113c4c4c0c222978e413a5faa801666957b1212a328e46c00c69821bf7
+        EOF
 
-       
+
         echo "KSUVER=$KSU_VERSION" >> $GITHUB_ENV
 
 
