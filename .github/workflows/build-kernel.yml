@@ -305,7 +305,7 @@ jobs:
 
         if [[ https://github.com/Jbub5/AnyKernel3 == *'.git' ]]; then
            git clone https://github.com/Jbub5/AnyKernel3 -b proton --depth=1 AnyKernel3
-else
+        else
            wget -nv --tries=3 --timeout=30 -O AnyKernel3.zip https://github.com/Jbub5/AnyKernel3/archive/refs/heads/proton.zip
            if [ $? -ne 0 ] || [ ! -s AnyKernel3.zip ]; then
                echo "Failed to download AnyKernel3.zip or the file is empty!"
