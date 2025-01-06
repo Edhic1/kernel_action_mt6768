@@ -335,8 +335,9 @@ jobs:
           fi
 
           # Create the directory and extract the content
-          mkdir AnyKernel3
-          unzip AnyKernel3.zip -d AnyKernel3/
+
+          unzip AnyKernel3.zip
+          mv AnyKernel3-proton/ AnyKernel3
           if [ $? -ne 0 ]; then
               echo "Error: Failed to extract AnyKernel3.zip!"
               exit 1
@@ -377,6 +378,14 @@ jobs:
       with:
         name: AnyKernel3${{ env.LOCALVERSION }}${{ env.UPLOADNAME }}-${{ env.DEVICE }}-${{ env.BUILD_TIME }}
         path: kernel_workspace/AnyKernel3/*
+
+
+    - name: Upload out
+      if: env.CHECK_FILE_IS_OK == 'true'
+      uses: actions/upload-artifact@v4
+      with:
+        name: OUT${{ env.LOCALVERSION }}${{ env.UPLOADNAME }}-${{ env.DEVICE }}-${{ env.BUILD_TIME }}
+        path: $GITHUB_WORKSPACE/kernel_workspace/android-kernel/out/*
 
     - name: Upload ${{ env.KERNEL_IMAGE_NAME }}
       if: env.CHECK_FILE_IS_OK == 'true'
