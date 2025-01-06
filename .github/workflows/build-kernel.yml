@@ -22,7 +22,7 @@ jobs:
       if: env.REMOVE_UNUSED_PACKAGES == 'true'
       uses: jlumbroso/free-disk-space@main
       with:
-        tool-cache: ture
+        tool-cache: true
         android: false
         dotnet: true
         haskell: true
@@ -385,7 +385,7 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: OUT${{ env.LOCALVERSION }}${{ env.UPLOADNAME }}-${{ env.DEVICE }}-${{ env.BUILD_TIME }}
-        path: $GITHUB_WORKSPACE/kernel_workspace/android-kernel/out/*
+        path: kernel_workspace/android-kernel/out/*
 
     - name: Upload ${{ env.KERNEL_IMAGE_NAME }}
       if: env.CHECK_FILE_IS_OK == 'true'
